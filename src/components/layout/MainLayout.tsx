@@ -56,12 +56,10 @@ const MainLayout = () => {
             style={{
               color: "white",
               textAlign: "center",
-              border: "1px solid white",
               height: "4rem",
               display: "flex",
               justifyContent: "center",
-              justifyItems: "center",
-              alignItems: "center"
+              alignItems: "center",
             }}
           >
             <h1>PH Uni</h1>
