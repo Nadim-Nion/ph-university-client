@@ -12,7 +12,7 @@ console.log("Final result:", result);
 const adminpaths2 = [
   {
     name: "Dashboard",
-    path: "/admin/dashboard",
+    path: "dashboard",
     element: "ADMIN_DASHBOARD",
   },
   {
@@ -20,17 +20,17 @@ const adminpaths2 = [
     children: [
       {
         name: "Create Admin",
-        path: "/admin/create-admin",
+        path: "create-admin",
         element: "CREATE_ADMIN",
       },
       {
         name: "Create Faculty",
-        path: "/admin/create-faculty",
+        path: "create-faculty",
         element: "CREATE_FACULTY",
       },
       {
         name: "Create Student",
-        path: "/admin/create-student",
+        path: "create-student",
         element: "CREATE_STUDENT",
       },
     ],
@@ -38,8 +38,24 @@ const adminpaths2 = [
 ];
 
 const newArray = adminpaths2.reduce((acc, item) => {
-    acc.push(item);
+  
+  if(item.path && item.element){
+    acc.push({
+      path: item.path,
+      element: item.element
+    })
+  }
+
+  if(item.children){
+    item.children.forEach((child) => {
+      acc.push({
+        path: child.path,
+        element: child.element
+      })
+    })
+  }
+
     return acc;
 }, []);
 
-console.log(newArray)
+console.log("newArray =>",newArray);
