@@ -39,6 +39,29 @@ const adminpaths2 = [
 
 const newArray = adminpaths2.reduce((acc, item) => {
   
+  if(item.path && item.path){
+    acc.push({
+      key: item.name,
+      label: 'Navlink to ' + item.path,
+    })
+  }
+
+  if(item.children){
+    acc.push({
+      key: item.name,
+      label: item.name,
+      children: item.children.map((child) => ({
+        key: child.name,
+        label: 'Navlink to ' + child.path,
+      }))
+    })
+  }
+
+    return acc;
+}, []);
+
+/* const newArray = adminpaths2.reduce((acc, item) => {
+  
   if(item.path && item.element){
     acc.push({
       path: item.path,
@@ -56,6 +79,7 @@ const newArray = adminpaths2.reduce((acc, item) => {
   }
 
     return acc;
-}, []);
+}, []); */
 
 console.log("newArray =>",newArray);
+// console.log("Stringified newArray =>", JSON.stringify(newArray));
