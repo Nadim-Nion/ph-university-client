@@ -1,6 +1,6 @@
 import { Layout, Menu } from "antd";
 import { Outlet } from "react-router";
-import { adminSidebarItems } from "../../routes/adminRoutes";
+import { adminSidebarItems } from "../../routes/admin.routes";
 
 const { Header, Content, Footer, Sider } = Layout;
 

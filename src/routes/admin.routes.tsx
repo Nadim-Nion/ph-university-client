@@ -5,10 +5,6 @@ import CreateAdmin from "../pages/admin/CreateAdmin";
 import CreateFaculty from "../pages/admin/CreateFaculty";
 import CreateStudent from "../pages/admin/CreateStudent";
 
-type TRoute = {
-  path: string;
-  element: ReactNode;
-};
 
 type TSidebarItem = {
   key: string;
@@ -16,7 +12,7 @@ type TSidebarItem = {
   children?: TSidebarItem[];
 };
 
-const adminpaths = [
+export const adminPaths = [
   {
     name: "Dashboard",
     path: "dashboard",
@@ -45,7 +41,7 @@ const adminpaths = [
 ];
 
 // Programmatical way for Sidebar items
-export const adminSidebarItems = adminpaths.reduce((acc: TSidebarItem[], item) => {
+export const adminSidebarItems = adminPaths.reduce((acc: TSidebarItem[], item) => {
   if (item.path && item.path) {
     acc.push({
       key: item.name,
@@ -92,7 +88,7 @@ export const adminSidebarItems = adminpaths.reduce((acc: TSidebarItem[], item) =
 ]; */
 
 // Programmatical way for Admin Routes
-const adminRoutes = adminpaths.reduce((acc: TRoute[], item) => {
+/* const adminRoutes = adminPaths.reduce((acc: TRoute[], item) => {
   if (item.path && item.element) {
     acc.push({
       path: item.path,
@@ -112,4 +108,4 @@ const adminRoutes = adminpaths.reduce((acc: TRoute[], item) => {
   return acc;
 }, []);
 
-export default adminRoutes;
+export default adminRoutes; */
