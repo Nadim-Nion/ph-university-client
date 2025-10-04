@@ -1,16 +1,7 @@
-import type { ReactNode } from "react";
-import { NavLink } from "react-router";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import CreateAdmin from "../pages/admin/CreateAdmin";
 import CreateFaculty from "../pages/admin/CreateFaculty";
 import CreateStudent from "../pages/admin/CreateStudent";
-
-
-type TSidebarItem = {
-  key: string;
-  label: ReactNode;
-  children?: TSidebarItem[];
-};
 
 export const adminPaths = [
   {
@@ -41,7 +32,7 @@ export const adminPaths = [
 ];
 
 // Programmatical way for Sidebar items
-export const adminSidebarItems = adminPaths.reduce((acc: TSidebarItem[], item) => {
+/* export const adminSidebarItems = adminPaths.reduce((acc: TSidebarItem[], item) => {
   if (item.path && item.path) {
     acc.push({
       key: item.name,
@@ -61,7 +52,7 @@ export const adminSidebarItems = adminPaths.reduce((acc: TSidebarItem[], item) =
   }
 
   return acc;
-}, []);
+}, []); */
 
 // Hard Coded way for Admin Routes
 /* export const adminPaths = [

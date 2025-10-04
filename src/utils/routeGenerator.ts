@@ -1,16 +1,6 @@
-import type { ReactNode } from "react";
+import type { TRoute, TUserPath } from "../types";
+// import type { TUserPath } from "../types/sidebar.type";
 
-type TRoute = {
-  path: string;
-  element: ReactNode;
-};
-
-type TUserPath = {
-  name: string;
-  path?: string;
-  element?: ReactNode;
-  children?: TUserPath[];
-};
 
 export const routerGenerator = (items: TUserPath[]) => {
   // Programmatical way for generating Admin/Student/Faculty Routes
