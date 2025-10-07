@@ -1,77 +1,202 @@
-# University Management Project (Client)
+# Prime Horizon University Management System (Frontend)
+
+This is the **frontend part** of the **Prime Horizon University Management System**, built with **TypeScript**, **React**, **Redux Toolkit**, **RTK Query**, **Tailwind CSS**, and **Ant Design**. The project implements a **modular and scalable architecture** for maintainable code.
 
 ---
 
-# React + TypeScript + Vite
+## Features
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- **Student Management**:
 
-Currently, two official plugins are available:
+  - View all students.
+  - Fetch a specific student by ID.
+  - Create and update student records.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **State Management**:
 
-## React Compiler
+  - Uses **Redux Toolkit** for global state management.
+  - Integrates **RTK Query** for efficient data fetching, caching, and mutations.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **UI Components**:
 
-## Expanding the ESLint configuration
+  - Built with **React** and **Ant Design** for a responsive, modern interface.
+  - Styled using **Tailwind CSS** for utility-first styling and rapid UI development.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Form Handling & Validation**:
 
-```js
-export default defineConfig([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
+  - Implemented using **React Hook Form** and Ant Design form components.
+  - Ensures proper validation before submitting data to the backend.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- **API Integration**:
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+  - Communicates with the backend API using **RTK Query**.
+  - Supports CRUD operations and error handling for API requests.
+
+- **Responsive Design**:
+  - Fully responsive interface for desktop, tablet, and mobile devices.
+
+---
+
+## Technologies Used
+
+- **TypeScript**: Type safety and autocompletion for a reliable codebase.
+- **React**: Component-based UI library for building interactive interfaces.
+- **Redux Toolkit**: Simplified global state management.
+- **RTK Query**: Efficient data fetching, caching, and mutation handling.
+- **Tailwind CSS**: Utility-first CSS framework for fast styling.
+- **Ant Design**: Modern and responsive UI components.
+- **React Router**: Client-side routing for multi-page SPA navigation.
+
+---
+
+## Tools
+
+- **Vite**: Fast frontend build tool.
+- **Postman**: Test API endpoints.
+- **VS Code**: Development environment.
+- **Git & GitHub**: Version control and repository hosting.
+
+---
+
+## Installation and Setup
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/Nadim-Nion/ph-university-client.git
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+2. Navigate to the project directory:
 
-```js
-// eslint.config.js
-import reactX from "eslint-plugin-react-x";
-import reactDom from "eslint-plugin-react-dom";
-
-export default defineConfig([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs["recommended-typescript"],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+```bash
+ph-university-client
 ```
+
+3. Install dependencies:
+
+```bash
+npm install
+```
+
+4. Set up environment variables in a .env file:
+
+```bash
+VITE_API_URL=<your-backend-api-url>
+```
+
+5. Start the development server:
+
+```bash
+npm run dev
+```
+
+6. Open `http://localhost:5173` in your browser.
+
+---
+
+## Folder Structure
+
+```bash
+PH-UNIVERSITY-CLIENT
+├── node_modules
+├── public
+├── src
+│   ├── assets
+│   ├── components
+│   ├── config
+│   ├── hooks
+│   ├── lib
+│   ├── pages
+│   ├── redux
+│   │   ├── api
+│   │   │   └── baseApi.ts
+│   │   └── features
+│   │       └── auth
+│   │           ├── authApi.ts
+│   │           ├── authSlice.ts
+│   │           ├── hooks.ts
+│   │           └── store.ts
+│   ├── routes
+│   ├── styles
+│   ├── types
+│   ├── utils
+│   ├── App.css
+│   ├── App.tsx
+│   └── index.css
+├── .env.example
+├── .env.local
+├── .gitignore
+├── eslint.config.js
+├── index.html
+├── package-lock.json
+├── package.json
+├── README.md
+├── test.js
+├── tsconfig.app.json
+├── tsconfig.json
+├── tsconfig.node.json
+├── vite.config.ts
+└── main.tsx
+```
+
+---
+
+## About Me
+
+Hi, I am Nadim Mahmud Nion. I have recently concluded my graduation from the department of Computer Science and Engineering (CSE) at the Daffodil International University (DIU). I have been learning MERN Stack Web Development since 2022. I am expertise in the following skills:
+
+- React
+
+- Redux Toolkit
+
+- RTK Query
+
+- Ant Design
+
+- Shadcn
+
+- Express.js
+
+- TypeScript
+
+- Mongoose
+
+- Postman
+
+- MongoDB Compass
+
+- NoSQLBooster
+
+- Node.js
+
+- MongoDB Atlas
+
+- JWT
+
+- Stripe
+
+- Vite
+
+- React Router
+
+- Firebase (Authentication & Hosting)
+
+- Vercel
+
+- JavaScript
+
+- Advanced JavaScript
+
+- Daisy UI
+
+- Bootstrap
+
+- Tailwind
+
+- HTML5
+
+- CSS3
+
+- Media Query
+
+I have built multiple projects using these skills. You are invited to my GitHub profile to know about my projects and don't forget to give a star to my projects.
