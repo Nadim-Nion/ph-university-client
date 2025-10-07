@@ -15,12 +15,13 @@ const Login = () => {
     },
   });
   const [login, { data, error }] = useLoginMutation();
-  console.log("🚀 ~ Login ~ data, error in Login.tsx:", {data, error});
+  console.log("🚀 ~ Login ~ data in Login.tsx:", data);
+  console.log("🚀 ~ Login ~ error in Login.tsx:", error);
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     const userInfo = {
       id: data.id,
-      Password: data.password,
+      password: data.password,
     };
 
     login(userInfo);
