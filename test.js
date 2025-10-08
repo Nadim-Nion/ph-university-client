@@ -81,5 +81,24 @@ const newArray = adminpaths2.reduce((acc, item) => {
     return acc;
 }, []); */
 
-console.log("newArray =>",newArray);
+// console.log("newArray =>",newArray);
 // console.log("Stringified newArray =>", JSON.stringify(newArray));
+
+/* Serialized vs Non Serialized in JS */
+const obj = {
+  name: "Mezba",
+  role: "mentor",
+  age: 30
+}
+
+const obj2 = {
+  name: "Mezba",
+  role: "mentor",
+  age: 30,
+  greet: () => {
+    return "Hello Mezba Bhai"
+  }
+}
+
+console.log("Serialized obj =>", JSON.stringify(obj));
+console.log("Non Serialized obj =>", JSON.stringify(obj2));
