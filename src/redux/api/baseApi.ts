@@ -15,8 +15,14 @@ const baseQuery = fetchBaseQuery({
   },
 });
 
+const baseQueryWithRefreshToken = async (args, api, extraOptions) => {
+  const result = await baseQuery(args, api, extraOptions);
+  console.log("Custom Base Query:", result);
+  return result;
+};
+
 export const baseApi = createApi({
   reducerPath: "baseApi",
-  baseQuery: baseQuery,
+  baseQuery: baseQueryWithRefreshToken,
   endpoints: () => ({}),
 });
