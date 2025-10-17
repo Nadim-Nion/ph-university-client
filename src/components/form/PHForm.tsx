@@ -1,7 +1,29 @@
-import { FormProvider, useForm } from "react-hook-form";
+import type { ReactNode } from "react";
+import {
+  FormProvider,
+  useForm,
+  type FieldValues,
+  type SubmitHandler,
+} from "react-hook-form";
 
-const PHForm = ({ onSubmit, children }) => {
-  const methods = useForm();
+type TFormProps = {
+  onSubmit: SubmitHandler<FieldValues>;
+  children: ReactNode;
+}  & TFormConfig;
+
+type TFormConfig = {
+    defaultValues?: Record<string, unknown>;
+}
+
+const PHForm = ({ onSubmit, children, defaultValues }: TFormProps) => {
+
+    const formConfig: TFormConfig = {}
+
+    if(defaultValues){
+        formConfig['defaultValues'] = defaultValues
+    }
+
+  const methods = useForm(formConfig);
 
   return (
     <FormProvider {...methods}>
