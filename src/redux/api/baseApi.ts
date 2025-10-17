@@ -21,6 +21,8 @@ const baseQuery = fetchBaseQuery({
   },
 });
 
+/* I have watched the video of module (28-7) till 1:44 mins */
+
 const baseQueryWithRefreshToken: BaseQueryFn<
   string | FetchArgs,
   unknown,
