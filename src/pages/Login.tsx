@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Button, Row } from "antd";
 import { type FieldValues, type SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router";
@@ -13,6 +14,8 @@ import { verifyToken } from "../utils/verifyToken";
 //   id: string;
 //   password: string;
 // };
+
+/* I have watched the video of module 29-1 till 3:17 mins */
 
 const Login = () => {
   // const { register } = useForm<Inputs>({
@@ -36,7 +39,7 @@ const Login = () => {
   }
 
   const onSubmit: SubmitHandler<FieldValues> = async (data: FieldValues) => {
-    console.log("data in login:", data);
+    // console.log("data in login:", data);
     const toastId = toast.loading("Logging in ...");
 
     try {
@@ -53,7 +56,7 @@ const Login = () => {
       navigate(`/${user?.role}/dashboard`);
     } catch (error) {
       toast.error("Something went wrong", { id: toastId, duration: 2000 });
-      console.log("error in Login:", error);
+      // console.log("error in Login:", error);
     }
   };
 
