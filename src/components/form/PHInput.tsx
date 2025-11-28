@@ -11,11 +11,11 @@ const PHInput = ({ type, name, label }: TInputProps) => {
   return (
     <div>
       <div style={{ marginBottom: "20px" }}>
-        {label ? label : null}
+        {/* {label ? label : null} */}
         <Controller
           name={name}
           render={({ field }) => (
-            <Form.Item>
+            <Form.Item label={label}>
               <Input type={type} id={name} {...field} />
             </Form.Item>
           )}
