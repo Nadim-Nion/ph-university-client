@@ -1,49 +1,40 @@
 import { Button, Col, Flex } from "antd";
 import type { FieldValues, SubmitHandler } from "react-hook-form";
 import PHForm from "../../../components/form/PHForm";
-// import PHInput from "../../../components/form/PHInput";
 import PHSelect from "../../../components/form/PHSelect";
-
-// const nameOptions = [
-//   {
-//     label: "Autumn",
-//     value: "01",
-//   },
-//   {
-//     label: "Summer",
-//     value: "02",
-//   },
-//   {
-//     label: "Fall",
-//     value: "03",
-//   },
-// ];
-
 
 const nameOptions = [
   {
     label: "Autumn",
-    value: "Autumn 01",
+    value: "01",
   },
   {
     label: "Summer",
-    value: "Summer 02",
+    value: "02",
   },
   {
     label: "Fall",
-    value: "Fall 03",
+    value: "03",
   },
 ];
 
-const CreateAcademicSemester = () => {
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log("data in create academic semester:", data);
+const currentYear = new Date().getFullYear();
+const yearOptions = [0, 1, 2, 3, 4].map((number) => ({
+  label: (currentYear + number).toString(),
+  value: (currentYear + number).toString(),
+}));
 
-    const semesterData = data.name.split(' ');
-    const name = semesterData[0];
-    const code = semesterData[1];
-    const semesterDataObj = {name, code}
-    console.log("🚀 ~ onSubmit ~ semesterData:", semesterDataObj);
+function CreateAcademicSemester() {
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    console.log("🚀 ~ onSubmit ~ data:", data);
+
+    const name = nameOptions[Number(data?.name) - 1]?.label;
+    const semesterData = {
+      name,
+      code: data.name,
+      year: data.year,
+    };
+    console.log("🚀 ~ onSubmit ~ semesterData:", semesterData);
   };
 
   return (
@@ -51,11 +42,18 @@ const CreateAcademicSemester = () => {
       <Col span={6}>
         <PHForm onSubmit={onSubmit}>
           <PHSelect label="Name" name="name" options={nameOptions} />
+          <PHSelect label="Year" name="year" options={yearOptions} />
+          <PHSelect
+            label="Start Month"
+            name="startMonth"
+            options={nameOptions}
+          />
+          <PHSelect label="End Month" name="endMonth" options={nameOptions} />
           <Button htmlType="submit">Submit</Button>
         </PHForm>
       </Col>
     </Flex>
   );
-};
+}
 
 export default CreateAcademicSemester;

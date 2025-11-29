@@ -1,10 +1,10 @@
 import { Layout, Menu } from "antd";
+import { selectCurrentUser } from "../../redux/features/auth/authSlice";
+import { useAppSelector } from "../../redux/hooks";
 import { adminPaths } from "../../routes/admin.routes";
 import { facultyPaths } from "../../routes/faculty.routes";
 import { studentPaths } from "../../routes/student.routes";
 import { sidebarItemsGenerator } from "../../utils/sidebarItemsGenerator";
-import { useAppSelector } from "../../redux/hooks";
-import { selectCurrentUser } from "../../redux/features/auth/authSlice";
 
 const { Sider } = Layout;
 
@@ -15,7 +15,7 @@ const USER_ROLES = {
 };
 
 const Sidebar = () => {
-  const user = useAppSelector(selectCurrentUser)
+  const user = useAppSelector(selectCurrentUser);
   let sidebarItems;
 
   switch (user!.role) {
@@ -37,7 +37,7 @@ const Sidebar = () => {
   return (
     <div>
       <Sider
-        style={{ height: "100vh" }}
+        style={{ height: "100vh"}} // , position: "sticky", top: 0, left: 0
         breakpoint="lg"
         collapsedWidth="0"
         /* onBreakpoint={(broken) => {
