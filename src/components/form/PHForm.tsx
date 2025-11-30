@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Form } from "antd";
 import type { ReactNode } from "react";
 import {
@@ -14,13 +15,23 @@ type TFormProps = {
 
 type TFormConfig = {
   defaultValues?: Record<string, unknown>;
+  resolver?: any;
 };
 
-const PHForm = ({ onSubmit, children, defaultValues }: TFormProps) => {
+const PHForm = ({
+  onSubmit,
+  children,
+  defaultValues,
+  resolver,
+}: TFormProps) => {
   const formConfig: TFormConfig = {};
 
   if (defaultValues) {
     formConfig["defaultValues"] = defaultValues;
+  }
+
+  if (resolver) {
+    formConfig["resolver"] = resolver;
   }
 
   const methods = useForm(formConfig);
