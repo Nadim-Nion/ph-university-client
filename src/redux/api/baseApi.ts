@@ -5,6 +5,7 @@ import type {
 } from "@reduxjs/toolkit/query";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { toast } from "sonner";
+import type { TError } from "../../types/global";
 import { logout, setUser } from "../features/auth/authSlice";
 import type { RootState } from "../store";
 
@@ -30,7 +31,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<
   let result = await baseQuery(args, api, extraOptions);
 
   if (result && result?.error && result?.error?.status === 404) {
-    toast.error("User is not found");
+    toast.error((result.error as TError).data.message || "Resource not found");
   }
 
   if (result && result?.error && result?.error?.status === 401) {
