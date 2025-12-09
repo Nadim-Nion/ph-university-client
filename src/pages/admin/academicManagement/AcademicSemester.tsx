@@ -1,17 +1,25 @@
 import { Table, type TableColumnsType, type TableProps } from "antd";
 import { useGetAllSemestersQuery } from "../../../redux/features/admin/academicManagement.api.";
+import type { TAcademicSemester } from "../../../types/academicManagemeny.type";
 
-interface DataType {
-  key: string;
-  // _id: string;
-  name: string;
-  year: string;
-  startMonth: string;
-  endMonth: string;
-}
+// interface DataType {
+//   key: string;
+//   // _id: string;
+//   name: string;
+//   year: string;
+//   startMonth: string;
+//   endMonth: string;
+// }
+
+export type TDataType = Pick<
+  TAcademicSemester,
+  "name" | "year" | "startMonth" | "endMonth"
+> & { key: string };
 
 const AcademicSemester = () => {
-  const { data: semesterData } = useGetAllSemestersQuery(undefined);
+  const { data: semesterData } = useGetAllSemestersQuery([
+    { name: "name", value: "Fall" },
+  ]);
 
   const tableData =
     semesterData &&
@@ -24,7 +32,7 @@ const AcademicSemester = () => {
       endMonth,
     }));
 
-  const columns: TableColumnsType<DataType> = [
+  const columns: TableColumnsType<TDataType> = [
     {
       title: "Name",
       dataIndex: "name",
@@ -68,21 +76,21 @@ const AcademicSemester = () => {
     },
   ];
 
-  const onChange: TableProps<DataType>["onChange"] = (
+  const onChange: TableProps<TDataType>["onChange"] = (
     pagination,
     filters,
     sorter,
     extra
   ) => {
-    console.log("params", pagination, filters, sorter, extra);
-    // console.log(filters);
+    // console.log("params", pagination, filters, sorter, extra);
+    console.log("Filters in Academic Semester:", filters);
   };
 
   return (
     // <div>
     //   <h2>Academic Semester</h2>
     // </div>
-    <Table<DataType>
+    <Table<TDataType>
       columns={columns}
       dataSource={tableData}
       onChange={onChange}
