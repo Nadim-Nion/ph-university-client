@@ -1,4 +1,5 @@
 import { Table, type TableColumnsType, type TableProps } from "antd";
+import { useState } from "react";
 import { useGetAllSemestersQuery } from "../../../redux/features/admin/academicManagement.api.";
 import type { TAcademicSemester } from "../../../types/academicManagemeny.type";
 
@@ -17,9 +18,14 @@ export type TDataType = Pick<
 > & { key: string };
 
 const AcademicSemester = () => {
-  const { data: semesterData } = useGetAllSemestersQuery([
+  const [params, setParams] = useState([]);
+
+  const { data: semesterData } = useGetAllSemestersQuery(params);
+  /* 
+  [
     { name: "name", value: "Fall" },
-  ]);
+  ]
+  */
 
   const tableData =
     semesterData &&
@@ -39,32 +45,36 @@ const AcademicSemester = () => {
       showSorterTooltip: { target: "full-header" },
       filters: [
         {
-          text: "Joe",
-          value: "Joe",
+          text: "Autumn",
+          value: "Autumn",
         },
         {
-          text: "Jim",
-          value: "Jim",
+          text: "Fall",
+          value: "Fall",
         },
         {
-          text: "Submenu",
-          value: "Submenu",
-          children: [
-            {
-              text: "Green",
-              value: "Green",
-            },
-            {
-              text: "Black",
-              value: "Black",
-            },
-          ],
+          text: "Summer",
+          value: "Summer",
         },
       ],
     },
     {
       title: "Year",
       dataIndex: "year",
+      filters: [
+        {
+          text: "2025",
+          value: "2025",
+        },
+        {
+          text: "2026",
+          value: "2026",
+        },
+        {
+          text: "2027",
+          value: "2027",
+        },
+      ],
     },
     {
       title: "Start Month",
@@ -83,7 +93,23 @@ const AcademicSemester = () => {
     extra
   ) => {
     // console.log("params", pagination, filters, sorter, extra);
-    console.log("Filters in Academic Semester:", filters);
+    console.log({ filters, extra });
+
+    if (extra.action === "filter") {
+      const queryParams: { name: string; value: string }[] = [];
+
+      filters.name?.forEach((item) =>
+        queryParams.push({ name: "name", value: item })
+      );
+
+      filters.year?.forEach((item) => (
+        queryParams.push({name: 'year', value: item})
+      ))
+
+      console.log("QueryParams:", queryParams);
+
+      setParams(queryParams);
+    }
   };
 
   return (
