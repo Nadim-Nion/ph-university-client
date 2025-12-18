@@ -1,4 +1,4 @@
-import type { TResponse } from "../../../types";
+import type { TQueryParams, TResponse } from "../../../types";
 import type { TAcademicSemester } from "../../../types/academicManagemeny.type";
 import { baseApi } from "../../api/baseApi";
 
@@ -12,8 +12,8 @@ const academicManagementApi = baseApi.injectEndpoints({
         // params.append(args[0].name, args[0].value)
 
         if (args.length > 0) {
-          args.forEach((item: { name: string; value: string }) => {
-            params.append(item.name, item.value);
+          args.forEach((item: TQueryParams) => {
+            params.append(item.name, item.value as string);
           });
         }
 

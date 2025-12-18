@@ -1,6 +1,14 @@
-import { Table, type TableColumnsType, type TableProps } from "antd";
+import {
+  Alert,
+  Button,
+  Spin,
+  Table,
+  type TableColumnsType,
+  type TableProps,
+} from "antd";
 import { useState } from "react";
 import { useGetAllSemestersQuery } from "../../../redux/features/admin/academicManagement.api.";
+import type { TQueryParams } from "../../../types";
 import type { TAcademicSemester } from "../../../types/academicManagemeny.type";
 
 // interface DataType {
@@ -18,14 +26,20 @@ export type TDataType = Pick<
 > & { key: string };
 
 const AcademicSemester = () => {
-  const [params, setParams] = useState([]);
+  const [params, setParams] = useState<TQueryParams[]>([]);
 
-  const { data: semesterData } = useGetAllSemestersQuery(params);
+  const {
+    data: semesterData,
+    isLoading,
+    isFetching,
+  } = useGetAllSemestersQuery(params);
   /* 
   [
     { name: "name", value: "Fall" },
   ]
   */
+
+  // console.log({ isLoading, isFetching });
 
   const tableData =
     semesterData &&
@@ -84,39 +98,60 @@ const AcademicSemester = () => {
       title: "End Month",
       dataIndex: "endMonth",
     },
+    {
+      title: "Action",
+      render: () => {
+        return (
+          <div>
+            <Button>Update</Button>
+          </div>
+        );
+      },
+    },
   ];
 
   const onChange: TableProps<TDataType>["onChange"] = (
-    pagination,
+    _pagination,
     filters,
-    sorter,
+    _sorter,
     extra
   ) => {
     // console.log("params", pagination, filters, sorter, extra);
-    console.log({ filters, extra });
+    // console.log({ filters, extra });
 
     if (extra.action === "filter") {
-      const queryParams: { name: string; value: string }[] = [];
+      const queryParams: TQueryParams[] = [];
 
       filters.name?.forEach((item) =>
         queryParams.push({ name: "name", value: item })
       );
 
-      filters.year?.forEach((item) => (
-        queryParams.push({name: 'year', value: item})
-      ))
+      filters.year?.forEach((item) =>
+        queryParams.push({ name: "year", value: item })
+      );
 
-      console.log("QueryParams:", queryParams);
+      // console.log("QueryParams:", queryParams);
 
       setParams(queryParams);
     }
   };
+
+  if (isLoading) {
+    <Spin tip="Loading...">
+      <Alert
+        message="Alert message title"
+        description="Further details about the context of this alert."
+        type="info"
+      />
+    </Spin>;
+  }
 
   return (
     // <div>
     //   <h2>Academic Semester</h2>
     // </div>
     <Table<TDataType>
+      loading={isFetching}
       columns={columns}
       dataSource={tableData}
       onChange={onChange}
