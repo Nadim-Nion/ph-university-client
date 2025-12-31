@@ -15,7 +15,7 @@ const CreateAcademicFaculty = () => {
   const [addAcademicFaculty] = useAddAcademicFacultyMutation();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    console.log("🚀 ~ onSubmit ~ data:", data);
+    // console.log("🚀 ~ onSubmit ~ data:", data);
 
     const facultyData = { name: data.name };
 

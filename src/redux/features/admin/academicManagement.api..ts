@@ -41,6 +41,25 @@ const academicManagementApi = baseApi.injectEndpoints({
       }),
     }),
 
+    // Get all academic faculties
+    getAllFaculties: builder.query({
+      query: (args) => {
+        const params = new URLSearchParams();
+
+        if (args.length > 0) {
+          args.forEach((item: TQueryParams) => {
+            params.append(item.name, item.value as string);
+          });
+        }
+
+        return {
+          url: "/academic-faculties",
+          method: "GET",
+          params: params,
+        };
+      },
+    }),
+
     // Create an academic faculty
     addAcademicFaculty: builder.mutation({
       query: (data) => ({
@@ -55,5 +74,6 @@ const academicManagementApi = baseApi.injectEndpoints({
 export const {
   useGetAllSemestersQuery,
   useAddAcademicSemesterMutation,
+  useGetAllFacultiesQuery,
   useAddAcademicFacultyMutation,
 } = academicManagementApi;
