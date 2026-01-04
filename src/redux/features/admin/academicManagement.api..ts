@@ -46,7 +46,7 @@ const academicManagementApi = baseApi.injectEndpoints({
       query: (args) => {
         const params = new URLSearchParams();
 
-        if (args.length > 0) {
+        if (args && args.length > 0) {
           args.forEach((item: TQueryParams) => {
             params.append(item.name, item.value as string);
           });
@@ -68,6 +68,15 @@ const academicManagementApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
+
+    // Create an academic department
+    addAcademicDepartment: builder.mutation({
+      query: (data) => ({
+        url: "/academic-departments/create-academic-department",
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -76,4 +85,5 @@ export const {
   useAddAcademicSemesterMutation,
   useGetAllFacultiesQuery,
   useAddAcademicFacultyMutation,
+  useAddAcademicDepartmentMutation,
 } = academicManagementApi;
