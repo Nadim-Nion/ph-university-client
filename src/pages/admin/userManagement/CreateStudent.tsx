@@ -1,4 +1,4 @@
-import { Button } from "antd";
+import { Button, Col, Divider, Row } from "antd";
 import type { FieldValues, SubmitHandler } from "react-hook-form";
 import PHForm from "../../../components/form/PHForm";
 import PHInput from "../../../components/form/PHInput";
@@ -13,12 +13,14 @@ const studentDummyData = {
     },
     gender: "male",
     dateOfBirth: "1990-01-01",
+    bloogGroup: "A+",
+
     email: "student2@gmail.com",
     contactNo: "1235678",
     emergencyContactNo: "987-654-3210",
-    bloogGroup: "A+",
     presentAddress: "123 Main St, Cityville",
     permanentAddress: "456 Oak St, Townsville",
+
     guardian: {
       fatherName: "James Doe",
       fatherOccupation: "Engineer",
@@ -27,12 +29,14 @@ const studentDummyData = {
       motherOccupation: "Teacher",
       motherContactNo: "444-555-6666",
     },
+
     localGuardian: {
       name: "Alice Johnson",
       occupation: "Doctor",
       contactNo: "777-888-9999",
       address: "789 Pine St, Villageton",
     },
+
     admissionSemester: "65b0104110b74fcbd7a25d92",
     academicDepartment: "65b00fb010b74fcbd7a25d8e",
   },
@@ -40,20 +44,133 @@ const studentDummyData = {
 
 const CreateStudent = () => {
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    // console.log(data);
+    console.log(data);
 
-    const formData = new FormData();
-    formData.append("data", JSON.stringify(data));
+    // const formData = new FormData();
+    // formData.append("data", JSON.stringify(data));
 
     // This is development purpose only for debugging
-    console.log(Object.fromEntries(formData));
+    // console.log(Object.fromEntries(formData));
   };
 
   return (
-    <PHForm onSubmit={onSubmit}>
-      <PHInput type="text" name="name" label="Name" />
-      <Button htmlType="submit">Submit</Button>
-    </PHForm>
+    <Row>
+      <Col span={24}>
+        <PHForm onSubmit={onSubmit}>
+          <Divider>Personal Info</Divider>
+          <Row gutter={8}>
+            <Col span={24} md={{span: 12}} lg={{span: 8}}>
+              <PHInput type="text" name="name.firstName" label="First Name" />
+            </Col>
+
+            <Col span={24} md={{span: 12}} lg={{span: 8}}>
+              <PHInput type="text" name="name.middleName" label="Middle Name" />
+            </Col>
+
+            <Col span={24} md={{span: 12}} lg={{span: 8}}>
+              <PHInput type="text" name="name.lastName" label="Last Name" />
+            </Col>
+
+             <Col span={24} md={{span: 12}} lg={{span: 8}}>
+              <PHInput type="text" name="gender" label="Gender" />
+            </Col>
+
+            <Col span={24} md={{span: 12}} lg={{span: 8}}>
+              <PHInput type="text" name="dateOfBirth" label="Date of Birth" />
+            </Col>
+
+            <Col span={24} md={{span: 12}} lg={{span: 8}}>
+              <PHInput type="text" name="bloogGroup" label="Blood Group" />
+            </Col>
+          </Row>
+
+          <Divider>Contact Info</Divider>
+           <Row gutter={8}>
+            <Col span={24} md={{span: 12}} lg={{span: 8}}>
+              <PHInput type="text" name="email" label="Email" />
+            </Col>
+
+            <Col span={24} md={{span: 12}} lg={{span: 8}}>
+              <PHInput type="text" name="contactNo" label="Contact No" />
+            </Col>
+
+            <Col span={24} md={{span: 12}} lg={{span: 8}}>
+              <PHInput type="text" name="emergencyContactNo" label="Emergency Contact No" />
+            </Col>
+
+             <Col span={24} md={{span: 12}} lg={{span: 8}}>
+              <PHInput type="text" name="presentAddress" label="Present Address" />
+            </Col>
+
+            <Col span={24} md={{span: 12}} lg={{span: 8}}>
+              <PHInput type="text" name="permanentAddress" label="Permanent Address" />
+            </Col>
+
+            <Col span={24} md={{span: 12}} lg={{span: 8}}>
+              <PHInput type="text" name="bloogGroup" label="Blood Group" />
+            </Col>
+          </Row>
+
+          <Divider>Guardian Info</Divider>
+          <Row gutter={8}>
+            <Col span={24} md={{span: 12}} lg={{span: 8}}>
+              <PHInput type="text" name="guardian.fatherName" label="Father Name" />
+            </Col>
+
+            <Col span={24} md={{span: 12}} lg={{span: 8}}>
+              <PHInput type="text" name="guardian.fatherOccupation" label="Father Occupation" />
+            </Col>
+
+            <Col span={24} md={{span: 12}} lg={{span: 8}}>
+              <PHInput type="text" name="guardian.fatherContactNo" label="Father Contact No" />
+            </Col>
+
+             <Col span={24} md={{span: 12}} lg={{span: 8}}>
+              <PHInput type="text" name="guardian.motherName" label="Mother Name" />
+            </Col>
+
+            <Col span={24} md={{span: 12}} lg={{span: 8}}>
+              <PHInput type="text" name="guardian.motherOccupation" label="Mother Occupation" />
+            </Col>
+
+            <Col span={24} md={{span: 12}} lg={{span: 8}}>
+              <PHInput type="text" name="guardian.motherContactNo" label="Mother Contact No" />
+            </Col>
+          </Row>
+
+          <Divider>Local Guardian Info</Divider>
+           <Row gutter={8}>
+            <Col span={24} md={{span: 12}} lg={{span: 8}}>
+              <PHInput type="text" name="localGuardian.name" label="Name" />
+            </Col>
+
+            <Col span={24} md={{span: 12}} lg={{span: 8}}>
+              <PHInput type="text" name="localGuardian.occupation" label="Occupation" />
+            </Col>
+
+            <Col span={24} md={{span: 12}} lg={{span: 8}}>
+              <PHInput type="text" name="localGuardian.contactNo" label="Contact No" />
+            </Col>
+
+             <Col span={24} md={{span: 12}} lg={{span: 8}}>
+              <PHInput type="text" name="localGuardian.address" label="Address" />
+            </Col>
+          </Row>
+
+           <Divider>Academic Info</Divider>
+           <Row gutter={8}>
+            <Col span={24} md={{span: 12}} lg={{span: 8}}>
+              <PHInput type="text" name="admissionSemester" label="Admission Semester" />
+            </Col>
+
+            <Col span={24} md={{span: 12}} lg={{span: 8}}>
+              <PHInput type="text" name="academicDepartment" label="Academic Department" />
+            </Col>
+          </Row>
+          <Button htmlType="submit">Submit</Button>
+        </PHForm>
+      </Col>
+    </Row>
   );
 };
 
