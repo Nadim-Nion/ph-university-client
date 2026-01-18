@@ -9,6 +9,7 @@ import {
   useGetAllDepartmentsQuery,
   useGetAllSemestersQuery,
 } from "../../../redux/features/admin/academicManagement.api.";
+import { useAddStudentMutation } from "../../../redux/features/admin/userManagement.api";
 import type { TAcademicDepartment } from "../../../types/academicManagemeny.type";
 
 const studentDummyData = {
@@ -53,65 +54,82 @@ const studentDummyData = {
 // This is used for development purposes only. It should be removed later.
 const studentDefaultValues = {
   name: {
-      firstName: "I am ",
-      middleName: "Student",
-      lastName: "Number 1",
-    },
-    gender: "male",
-    // dateOfBirth: "1990-01-01",
-    bloogGroup: "A+",
+    firstName: "Nadim",
+    middleName: "Mahmud",
+    lastName: "Nion",
+  },
+  gender: "male",
+  // dateOfBirth: "1990-01-01",
+  bloogGroup: "A+",
 
-    email: "student2@gmail.com",
-    contactNo: "1235678",
-    emergencyContactNo: "987-654-3210",
-    presentAddress: "123 Main St, Cityville",
-    permanentAddress: "456 Oak St, Townsville",
+  email: "student72@gmail.com",
+  contactNo: "1235678",
+  emergencyContactNo: "987-654-3210",
+  presentAddress: "123 Main St, Cityville",
+  permanentAddress: "456 Oak St, Townsville",
 
-    guardian: {
-      fatherName: "James Doe",
-      fatherOccupation: "Engineer",
-      fatherContactNo: "111-222-3333",
-      motherName: "Mary Doe",
-      motherOccupation: "Teacher",
-      motherContactNo: "444-555-6666",
-    },
+  guardian: {
+    fatherName: "James Doe",
+    fatherOccupation: "Engineer",
+    fatherContactNo: "111-222-3333",
+    motherName: "Mary Doe",
+    motherOccupation: "Teacher",
+    motherContactNo: "444-555-6666",
+  },
 
-    localGuardian: {
-      name: "Alice Johnson",
-      occupation: "Doctor",
-      contactNo: "777-888-9999",
-      address: "789 Pine St, Villageton",
-    },
+  localGuardian: {
+    name: "Alice Johnson",
+    occupation: "Doctor",
+    contactNo: "777-888-9999",
+    address: "789 Pine St, Villageton",
+  },
 
-    admissionSemester: "65b0104110b74fcbd7a25d92",
-    academicDepartment: "65b00fb010b74fcbd7a25d8e",
-  }
+  // admissionSemester: "65b0104110b74fcbd7a25d92",
+  // academicDepartment: "65b00fb010b74fcbd7a25d8e",
+};
 
 const CreateStudent = () => {
+  const [addStudent, { data, error }] = useAddStudentMutation();
+  console.log({ data, error });
+
   const { data: semesterData, isLoading: sIsLoading } =
     useGetAllSemestersQuery(undefined);
 
   const { data: departmentData, isLoading: dIsLoading } =
     useGetAllDepartmentsQuery(undefined);
+  /* 
+     {
+      skip: sIsLoading 
+    } 
+    */
 
   const semesterDataOptions = semesterData?.data?.map((semester) => ({
     label: `${semester.name} ${semester.year}`,
     value: semester._id,
   }));
 
-  const departmentDataOptions = departmentData?.data?.map((department: Pick<TAcademicDepartment, 'name' | '_id'>) => ({
-    label: department.name,
-    value: department._id,
-  }));
+  const departmentDataOptions = departmentData?.data?.map(
+    (department: Pick<TAcademicDepartment, "name" | "_id">) => ({
+      label: department.name,
+      value: department._id,
+    }),
+  );
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     console.log(data);
 
-    // const formData = new FormData();
-    // formData.append("data", JSON.stringify(data));
+    const studentData = {
+      password: "student123",
+      student: data,
+    };
+
+    const formData = new FormData();
+    formData.append("data", JSON.stringify(studentData));
+
+    addStudent(formData);
 
     // This is development purpose only for debugging
-    // console.log(Object.fromEntries(formData));
+    console.log(Object.fromEntries(formData));
   };
 
   return (
