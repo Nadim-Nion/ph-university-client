@@ -12,7 +12,7 @@ const academicManagementApi = baseApi.injectEndpoints({
         // parms.append("limit", 10);
         // params.append(args[0].name, args[0].value)
 
-        if (args.length > 0) {
+        if (args && args.length > 0) {
           args.forEach((item: TQueryParams) => {
             params.append(item.name, item.value as string);
           });
