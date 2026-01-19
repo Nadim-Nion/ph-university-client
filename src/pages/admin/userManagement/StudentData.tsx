@@ -1,6 +1,7 @@
 import {
   Alert,
   Button,
+  Pagination,
   Space,
   Spin,
   Table,
@@ -24,7 +25,7 @@ export type TDataType = Pick<TStudent, "fullName" | "id"> & { key: string };
 
 const StudentData = () => {
   const [params, setParams] = useState<TQueryParams[]>([]);
-  const [page, setPage] = useState(2);
+  const [page, setPage] = useState(1);
 
   const {
     data: studentData,
@@ -43,6 +44,8 @@ const StudentData = () => {
   */
 
   // console.log({ isLoading, isFetching });
+
+  const metaData = studentData?.meta;
 
   const tableData =
     studentData &&
@@ -119,13 +122,17 @@ const StudentData = () => {
     // <div>
     //   <h2>Academic Semester</h2>
     // </div>
+    <>
     <Table<TDataType>
       loading={isFetching}
       columns={columns}
       dataSource={tableData}
       onChange={onChange}
       showSorterTooltip={{ target: "sorter-icon" }}
+      pagination={false}
     />
+    <Pagination current={page} total={metaData?.totalDoc} pageSize={metaData?.limit} onChange={(value) => setPage(value)} />
+    </>
   );
 };
 
