@@ -24,12 +24,18 @@ export type TDataType = Pick<TStudent, "fullName" | "id"> & { key: string };
 
 const StudentData = () => {
   const [params, setParams] = useState<TQueryParams[]>([]);
+  const [page, setPage] = useState(2);
 
   const {
     data: studentData,
     isLoading,
     isFetching,
-  } = useGetAllStudentsQuery(params);
+  } = useGetAllStudentsQuery([
+    { name: "limit", value: 3 },
+    { name: "page", value: page },
+    { name: "sort", value: "id" },
+    ...params,
+  ]);
   /* 
   [
     { name: "name", value: "Fall" },
