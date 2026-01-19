@@ -11,6 +11,7 @@ import {
 import { useState } from "react";
 import { useGetAllStudentsQuery } from "../../../redux/features/admin/userManagement.api";
 import type { TQueryParams, TStudent } from "../../../types";
+import { Link } from "react-router";
 
 // interface DataType {
 //   key: string;
@@ -21,7 +22,7 @@ import type { TQueryParams, TStudent } from "../../../types";
 //   endMonth: string;
 // }
 
-export type TDataType = Pick<TStudent, "fullName" | "id"> & { key: string };
+export type TDataType = Pick<TStudent, "fullName" | "id" | "email" | "contactNo"> & { key: string };
 
 const StudentData = () => {
   const [params, setParams] = useState<TQueryParams[]>([]);
@@ -32,7 +33,7 @@ const StudentData = () => {
     isLoading,
     isFetching,
   } = useGetAllStudentsQuery([
-    { name: "limit", value: 3 },
+    // { name: "limit", value: 3 },
     { name: "page", value: page },
     { name: "sort", value: "id" },
     ...params,
@@ -50,16 +51,18 @@ const StudentData = () => {
   const tableData =
     studentData &&
     studentData.data &&
-    studentData.data.map(({ _id, fullName, id }) => ({
+    studentData.data.map(({ _id, fullName, id, email, contactNo }) => ({
       key: _id,
       fullName,
       id,
+      email,
+      contactNo,
     }));
 
   const columns: TableColumnsType<TDataType> = [
     {
       title: "Name",
-      key: "id",
+      key: "name",
       dataIndex: "fullName",
     },
     {
@@ -68,11 +71,24 @@ const StudentData = () => {
       dataIndex: "id",
     },
     {
+      title: "Email",
+      key: "email",
+      dataIndex: "email",
+    },
+    {
+      title: "Contact No.",
+      key: "contactNo",
+      dataIndex: "contactNo",
+    },
+    {
       title: "Action",
-      render: () => {
+      render: (item) => {
+      console.log(item)
         return (
           <Space>
+            <Link to={`/admin/students-data/${item.key}`}>
             <Button>Details</Button>
+            </Link>
             <Button>Update</Button>
             <Button>Block</Button>
           </Space>
