@@ -89,8 +89,8 @@ const studentDefaultValues = {
 };
 
 const CreateStudent = () => {
-  const [addStudent, { data, error }] = useAddStudentMutation();
-  console.log({ data, error });
+  const [addStudent] = useAddStudentMutation(); // , { data, error }
+  // console.log({ data, error });
 
   const { data: semesterData, isLoading: sIsLoading } =
     useGetAllSemestersQuery(undefined);
@@ -116,7 +116,7 @@ const CreateStudent = () => {
   );
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
+    // console.log(data);
 
     const studentData = {
       password: "student123",
