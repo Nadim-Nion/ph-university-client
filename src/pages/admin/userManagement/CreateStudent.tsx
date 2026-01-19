@@ -12,7 +12,7 @@ import {
 import { useAddStudentMutation } from "../../../redux/features/admin/userManagement.api";
 import type { TAcademicDepartment } from "../../../types/academicManagemeny.type";
 
-const studentDummyData = {
+/* const studentDummyData = {
   password: "student123",
   student: {
     name: {
@@ -49,7 +49,7 @@ const studentDummyData = {
     admissionSemester: "65b0104110b74fcbd7a25d92",
     academicDepartment: "65b00fb010b74fcbd7a25d8e",
   },
-};
+}; */
 
 // This is used for development purposes only. It should be removed later.
 const studentDefaultValues = {

@@ -1,5 +1,4 @@
-import type { TQueryParams, TResponse } from "../../../types";
-import type { TAcademicSemester } from "../../../types/academicManagemeny.type";
+import type { TAcademicSemester, TQueryParams, TResponse } from "../../../types";
 import { baseApi } from "../../api/baseApi";
 
 const academicManagementApi = baseApi.injectEndpoints({
