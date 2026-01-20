@@ -83,7 +83,7 @@ const StudentData = () => {
     {
       title: "Action",
       render: (item) => {
-      console.log(item)
+      // console.log(item)
         return (
           <Space>
             <Link to={`/admin/students-data/${item.key}`}>
