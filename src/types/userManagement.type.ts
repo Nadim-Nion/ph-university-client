@@ -11,6 +11,7 @@ export type TStudent = {
   name: TName;
   gender: string;
   dateOfBirth: string;
+  bloogGroup: string;
   email: string;
   contactNo: string;
   emergencyContactNo: string;

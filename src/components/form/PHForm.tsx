@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Form } from "antd";
-import type { ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 import {
   FormProvider,
   useForm,
@@ -35,6 +35,15 @@ const PHForm = ({
   }
 
   const methods = useForm(formConfig);
+
+  const { reset } = methods;
+
+  // Reset form when defaultValues change
+  useEffect(() => {
+    if (defaultValues) {
+      reset(defaultValues);
+    }
+  }, [defaultValues, reset]);
 
   const submit: SubmitHandler<FieldValues> = (data) => {
     onSubmit(data);
