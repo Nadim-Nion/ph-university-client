@@ -62,6 +62,15 @@ const userManagementApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
+
+    // Update User status (block/active)
+    updateUserStatus: builder.mutation({
+      query: ({ userId, ...data }) => ({
+        url: `/users/change-status/${userId}`,
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -70,4 +79,5 @@ export const {
   useGetAllStudentsQuery,
   useGetSingleStudentQuery,
   useUpdateStudentMutation,
+  useUpdateUserStatusMutation,
 } = userManagementApi;

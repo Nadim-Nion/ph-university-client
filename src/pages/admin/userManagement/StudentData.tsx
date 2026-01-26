@@ -95,7 +95,9 @@ const StudentData = () => {
             <Link to={`/admin/student-update/${item.key}`}>
               <Button>Update</Button>
             </Link>
-            <Button>Block</Button>
+            <Link to={`/admin/student-block/${item.key}`}>
+              <Button>Block</Button>
+            </Link>
           </Space>
         );
       },
