@@ -1,17 +1,15 @@
 import { Button, Modal, Space } from "antd";
 import { useState } from "react";
-import { useParams } from "react-router";
 import {
   useGetSingleStudentQuery,
   useUpdateUserStatusMutation,
 } from "../../../redux/features/admin/userManagement.api";
 
-const StudentBlock = () => {
-  const { studentId } = useParams();
+const StudentBlock = ({studentId}: {studentId: string}) => {
 
   const [updateUserStatus] = useUpdateUserStatusMutation();
 
-  const { data: studentData } = useGetSingleStudentQuery(studentId as string);
+  const { data: studentData } = useGetSingleStudentQuery(studentId);
   const user = studentData?.data?.user;
 
   const [open, setOpen] = useState(false);
@@ -39,8 +37,8 @@ const StudentBlock = () => {
     <div>
       <>
         <Space>
-          <Button type="primary" onClick={showModal}>
-            Change User Status
+          <Button onClick={showModal}>
+            Block
           </Button>
         </Space>
         <Modal

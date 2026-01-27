@@ -12,6 +12,7 @@ import { useState } from "react";
 import { Link } from "react-router";
 import { useGetAllStudentsQuery } from "../../../redux/features/admin/userManagement.api";
 import type { TQueryParams, TStudent } from "../../../types";
+import StudentBlock from "./StudentBlock";
 
 // interface DataType {
 //   key: string;
@@ -95,9 +96,7 @@ const StudentData = () => {
             <Link to={`/admin/student-update/${item.key}`}>
               <Button>Update</Button>
             </Link>
-            <Link to={`/admin/student-block/${item.key}`}>
-              <Button>Block</Button>
-            </Link>
+            <StudentBlock studentId={item.key} />
           </Space>
         );
       },
