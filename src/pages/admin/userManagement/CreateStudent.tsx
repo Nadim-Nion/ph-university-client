@@ -1,5 +1,10 @@
 import { Button, Col, Divider, Form, Input, Row } from "antd";
-import { Controller, type FieldValues, type SubmitHandler } from "react-hook-form";
+import {
+  Controller,
+  type FieldValues,
+  type SubmitHandler,
+} from "react-hook-form";
+import Swal from "sweetalert2";
 import PHDatePicker from "../../../components/form/PHDatePicker";
 import PHForm from "../../../components/form/PHForm";
 import PHInput from "../../../components/form/PHInput";
@@ -89,8 +94,7 @@ const studentDefaultValues = {
 };
 
 const CreateStudent = () => {
-  const [addStudent] = useAddStudentMutation(); // , { data, error }
-  // console.log({ data, error });
+  const [addStudent, { data: addStudentData, error }] = useAddStudentMutation();
 
   const { data: semesterData, isLoading: sIsLoading } =
     useGetAllSemestersQuery(undefined);
@@ -116,8 +120,6 @@ const CreateStudent = () => {
   );
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    // console.log(data);
-
     const studentData = {
       password: "student123",
       student: data,
@@ -125,13 +127,33 @@ const CreateStudent = () => {
 
     const formData = new FormData();
     formData.append("data", JSON.stringify(studentData));
-    formData.append('file', data.image);
+    formData.append("file", data.image);
 
     addStudent(formData);
 
     // This is development purpose only for debugging
     // console.log(Object.fromEntries(formData));
   };
+
+  if (addStudentData?.success) {
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "Student created successfully 😊",
+      showConfirmButton: false,
+      timer: 2000,
+    });
+  }
+
+  if (error) {
+    Swal.fire({
+      position: "center",
+      icon: "error",
+      title: "Failed to create student 😢",
+      showConfirmButton: false,
+      timer: 2000,
+    });
+  }
 
   return (
     <Row>
@@ -168,18 +190,18 @@ const CreateStudent = () => {
             </Col>
 
             <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
-              <Controller 
-              name= 'image'
-              render={({field: {onChange, value,...field}}) => (
-                <Form.Item label="Picture">
-                  <Input 
-                  type="file" 
-                  {...field} 
-                  value={value?.fileName}
-                  onChange={(e) => onChange(e.target.files?.[0])} 
-                  />
-                </Form.Item>
-              )}
+              <Controller
+                name="image"
+                render={({ field: { onChange, value, ...field } }) => (
+                  <Form.Item label="Picture">
+                    <Input
+                      type="file"
+                      {...field}
+                      value={value?.fileName}
+                      onChange={(e) => onChange(e.target.files?.[0])}
+                    />
+                  </Form.Item>
+                )}
               />
             </Col>
           </Row>
