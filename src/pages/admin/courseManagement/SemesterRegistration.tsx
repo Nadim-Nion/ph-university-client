@@ -21,7 +21,7 @@ function SemesterRegistration() {
       value: "year",
     },
   ]);
-  console.log({ academicSemester });
+  // console.log({ academicSemester });
 
   const academicSemesterOptions = academicSemester?.data?.map((item) => ({
     value: item._id,
@@ -36,7 +36,7 @@ function SemesterRegistration() {
       minCredit: Number(data.minCredit),
       maxCredit: Number(data.maxCredit),
     };
-    console.log("🚀 ~ onSubmit ~ semesterData:", semesterData);
+    // console.log("🚀 ~ onSubmit ~ semesterData:", semesterData);
 
     try {
       const res = (await addSemesterRegistration(
