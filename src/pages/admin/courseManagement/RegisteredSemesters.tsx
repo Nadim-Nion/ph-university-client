@@ -1,6 +1,15 @@
-import { Alert, Button, Spin, Table, type TableColumnsType } from "antd";
+import {
+  Alert,
+  Button,
+  Dropdown,
+  Spin,
+  Table,
+  Tag,
+  type TableColumnsType,
+} from "antd";
+import moment from "moment";
 import { useGetAllRegisteredSemestersQuery } from "../../../redux/features/admin/courseManagement.api";
-import type { TRegisteredSemester } from "../../../types";
+import type { TRegisteredSemester, TStaus } from "../../../types";
 
 // interface DataType {
 //   key: string;
@@ -11,14 +20,27 @@ import type { TRegisteredSemester } from "../../../types";
 //   endMonth: string;
 // }
 
+const items = [
+  {
+    key: "UPCOMING",
+    label: "UPCOMING",
+  },
+  {
+    key: "ONGOING",
+    label: "ONGOING",
+  },
+  {
+    key: "ENDED",
+    label: "ENDED",
+  },
+];
+
 export type TDataType = Pick<
   TRegisteredSemester,
   "status" | "startDate" | "endDate"
 > & { key: string };
 
 const RegisteredSemesters = () => {
-  // const [params] = useState<TQueryParams[]>([]); // setParams
-
   const {
     data: registeredSemesterData,
     isFetching,
@@ -33,8 +55,8 @@ const RegisteredSemesters = () => {
         key: _id,
         name: `${academicSemester?.name} ${academicSemester?.year}`,
         status,
-        startDate,
-        endDate,
+        startDate: moment(startDate).format("YYYY-MM-DD"),
+        endDate: moment(endDate).format("YYYY-MM-DD"),
       }),
     );
 
@@ -47,6 +69,23 @@ const RegisteredSemesters = () => {
     {
       title: "Status",
       dataIndex: "status",
+      render: (item: TStaus) => {
+        // let color;
+        // if (item === "UPCOMING") {
+        //   color = "blue";
+        // } else if (item === "ONGOING") {
+        //   color = "green";
+        // } else {
+        //   color = "red";
+        // }
+        const statusColor: Record<TStaus, string> = {
+          UPCOMING: "blue",
+          ONGOING: "green",
+          ENDED: "red",
+        };
+        const color = statusColor[item] || "yellow";
+        return <Tag color={color}>{item}</Tag>;
+      },
     },
     {
       title: "Start Date",
@@ -60,9 +99,13 @@ const RegisteredSemesters = () => {
       title: "Action",
       render: () => {
         return (
-          <div>
+          <Dropdown
+            menu={{ items }}
+            placement="bottomLeft"
+            arrow={{ pointAtCenter: true }}
+          >
             <Button>Update</Button>
-          </div>
+          </Dropdown>
         );
       },
     },

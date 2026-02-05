@@ -11,3 +11,5 @@ export type TRegisteredSemester = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type TStaus = "UPCOMING" | "ONGOING" | "ENDED";
