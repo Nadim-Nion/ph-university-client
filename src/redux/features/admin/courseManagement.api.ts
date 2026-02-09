@@ -14,6 +14,7 @@ const courseManagementApi = baseApi.injectEndpoints({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["RegisteredSemester"],
     }),
 
     // Get All Registered Semesters
@@ -42,6 +43,17 @@ const courseManagementApi = baseApi.injectEndpoints({
           meta: response.meta,
         };
       },
+      providesTags: ["RegisteredSemester"],
+    }),
+
+    // Update Semester Registration Status
+    updateSemesterRegistration: builder.mutation({
+      query: ({ semesterId, status }) => ({
+        url: `/semester-registrations/${semesterId}`,
+        method: "PATCH",
+        body: { status },
+      }),
+      invalidatesTags: ["RegisteredSemester"],
     }),
   }),
 });
@@ -49,4 +61,5 @@ const courseManagementApi = baseApi.injectEndpoints({
 export const {
   useAddSemesterRegistrationMutation,
   useGetAllRegisteredSemestersQuery,
+  useUpdateSemesterRegistrationMutation,
 } = courseManagementApi;

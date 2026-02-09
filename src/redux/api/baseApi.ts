@@ -50,7 +50,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<
         setUser({
           user,
           token: data.data.accessToken,
-        })
+        }),
       );
 
       result = await baseQuery(args, api, extraOptions);
@@ -64,5 +64,6 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: baseQueryWithRefreshToken,
+  tagTypes: ["RegisteredSemester"],
   endpoints: () => ({}),
 });

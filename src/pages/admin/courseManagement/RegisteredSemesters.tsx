@@ -8,7 +8,10 @@ import {
   type TableColumnsType,
 } from "antd";
 import moment from "moment";
-import { useGetAllRegisteredSemestersQuery } from "../../../redux/features/admin/courseManagement.api";
+import {
+  useGetAllRegisteredSemestersQuery,
+  useUpdateSemesterRegistrationMutation,
+} from "../../../redux/features/admin/courseManagement.api";
 import type { TRegisteredSemester, TStaus } from "../../../types";
 
 // interface DataType {
@@ -41,11 +44,13 @@ export type TDataType = Pick<
 > & { key: string };
 
 const RegisteredSemesters = () => {
+  // const [semesterId, setSemesterId] = useState("");
   const {
     data: registeredSemesterData,
     isFetching,
     isLoading,
   } = useGetAllRegisteredSemestersQuery(undefined);
+  const [updateSemesterRegistration] = useUpdateSemesterRegistrationMutation();
 
   const tableData =
     registeredSemesterData &&
@@ -59,6 +64,15 @@ const RegisteredSemesters = () => {
         endDate: moment(endDate).format("YYYY-MM-DD"),
       }),
     );
+
+  const handleStatusUpdate = (semesterId: string, status: TStaus) => {
+    const updateData = {
+      semesterId,
+      status,
+    };
+
+    updateSemesterRegistration(updateData);
+  };
 
   const columns: TableColumnsType<TDataType> = [
     {
@@ -97,15 +111,20 @@ const RegisteredSemesters = () => {
     },
     {
       title: "Action",
-      render: () => {
+      render: (item) => {
         return (
           <Dropdown
-            menu={{ items }}
+            menu={{
+              items,
+              onClick: (info) =>
+                handleStatusUpdate(item.key, info.key as TStaus),
+            }} // handleStatusUpdate(info.key as TStaus)
+            trigger={["click"]}
             placement="bottomLeft"
             arrow={{ pointAtCenter: true }}
           >
             <Button>Update</Button>
-          </Dropdown>
+          </Dropdown> // onClick={() => setSemesterId(item.key)}
         );
       },
     },
