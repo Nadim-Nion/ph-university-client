@@ -12,7 +12,7 @@ export type TRegisteredSemester = {
   updatedAt: string;
 };
 
-export type TCourses = {
+export type TCourse = {
   _id: string;
   title: string;
   prefix: string;

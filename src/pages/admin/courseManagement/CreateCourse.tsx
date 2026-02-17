@@ -7,13 +7,13 @@ import PHForm from "../../../components/form/PHForm";
 import PHInput from "../../../components/form/PHInput";
 import PHSelect from "../../../components/form/PHSelect";
 import {
-  useAddSemesterRegistrationMutation,
+  useAddCourseMutation,
   useGetAllCoursesQuery,
 } from "../../../redux/features/admin/courseManagement.api";
-import type { TPreRequisiteCourse } from "../../../types";
+import type { TCourse, TPreRequisiteCourse, TResponse } from "../../../types";
 
 function CreateCourse() {
-  const [addSemesterRegistration] = useAddSemesterRegistrationMutation();
+  const [addCourse] = useAddCourseMutation();
 
   const { data: courses } = useGetAllCoursesQuery(undefined);
 
@@ -27,40 +27,36 @@ function CreateCourse() {
 
     const courseData = {
       ...data,
+      code: Number(data.code),
+      credits: Number(data.credits),
       isDeleted: false,
 
-      prerequisiteCourses: data?.prerequisiteCourses?.map(
-        (item: TPreRequisiteCourse) => ({
-          course: item,
-          isDeleted: false,
-        }),
-      ),
+      preRequisiteCourses: data?.preRequisiteCourses
+        ? data.preRequisiteCourses.map((item: TPreRequisiteCourse) => ({
+            course: item,
+            isDeleted: false,
+          }))
+        : [],
     };
-    console.log("🚀 ~ onSubmit ~ courseData:", courseData);
 
-    // try {
-    //   const res = (await addSemesterRegistration(
-    //     semesterData,
-    //   )) as TResponse<TAcademicSemester>;
-    //   if (res.error) {
-    //     toast.error(res.error?.data?.message, { id: toastId });
-    //   } else {
-    //     toast.success("Academic semester created successfully", {
-    //       id: toastId,
-    //     });
-    //   }
-    // } catch (error) {
-    //   toast.error("Failed to create academic semester", { id: toastId });
-    // }
+    try {
+      const res = (await addCourse(courseData)) as TResponse<TCourse>;
+      if (res.error) {
+        toast.error(res.error?.data?.message, { id: toastId });
+      } else {
+        toast.success("Course created successfully", {
+          id: toastId,
+        });
+      }
+    } catch (error) {
+      toast.error("Failed to create course", { id: toastId });
+    }
   };
 
   return (
     <Flex justify="center" align="center">
       <Col span={6}>
-        <PHForm
-          onSubmit={onSubmit}
-          // resolver={zodResolver(academicSemesterSchema)}
-        >
+        <PHForm onSubmit={onSubmit}>
           <PHInput type="text" label="Title" name="title" />
 
           <PHInput type="text" label="Prefix" name="prefix" />
@@ -73,7 +69,7 @@ function CreateCourse() {
             mode="multiple"
             options={prerequisiteCoursesOptions}
             label="Prerequisite Courses"
-            name="prerequisiteCourses"
+            name="preRequisiteCourses"
           />
 
           <Button htmlType="submit">Submit</Button>

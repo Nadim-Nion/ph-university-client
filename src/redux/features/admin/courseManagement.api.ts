@@ -1,5 +1,5 @@
 import type {
-  TCourses,
+  TCourse,
   TQueryParams,
   TRegisteredSemester,
   TResponseRedux,
@@ -77,13 +77,23 @@ const courseManagementApi = baseApi.injectEndpoints({
           params: params,
         };
       },
-      transformResponse: (response: TResponseRedux<TCourses[]>) => {
+      transformResponse: (response: TResponseRedux<TCourse[]>) => {
         return {
           data: response.data,
           meta: response.meta,
         };
       },
-      providesTags: ["RegisteredSemester"],
+      providesTags: ["Course"],
+    }),
+
+    // Add Course
+    addCourse: builder.mutation({
+      query: (data) => ({
+        url: "/courses/create-course",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Course"],
     }),
   }),
 });
@@ -93,4 +103,5 @@ export const {
   useGetAllRegisteredSemestersQuery,
   useUpdateSemesterRegistrationMutation,
   useGetAllCoursesQuery,
+  useAddCourseMutation,
 } = courseManagementApi;
