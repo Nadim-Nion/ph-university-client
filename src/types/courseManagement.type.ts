@@ -12,4 +12,20 @@ export type TRegisteredSemester = {
   updatedAt: string;
 };
 
+export type TCourses = {
+  _id: string;
+  title: string;
+  prefix: string;
+  code: number;
+  credits: number;
+  isDeleted: boolean;
+  preRequisiteCourses: TPreRequisiteCourse[];
+};
+
+export type TPreRequisiteCourse = {
+  course: string;
+  isDeleted: boolean;
+  _id: string;
+};
+
 export type TStaus = "UPCOMING" | "ONGOING" | "ENDED";

@@ -1,4 +1,5 @@
 import type {
+  TCourses,
   TQueryParams,
   TRegisteredSemester,
   TResponseRedux,
@@ -55,6 +56,35 @@ const courseManagementApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["RegisteredSemester"],
     }),
+
+    // Get all courses
+    getAllCourses: builder.query({
+      query: (args) => {
+        const params = new URLSearchParams();
+        // console.log({params})
+
+        if (args) {
+          args.forEach((item: TQueryParams) => {
+            params.append(item.name, item.value as string);
+
+            // console.log(params.toString());
+          });
+        }
+
+        return {
+          url: "/courses",
+          method: "GET",
+          params: params,
+        };
+      },
+      transformResponse: (response: TResponseRedux<TCourses[]>) => {
+        return {
+          data: response.data,
+          meta: response.meta,
+        };
+      },
+      providesTags: ["RegisteredSemester"],
+    }),
   }),
 });
 
@@ -62,4 +92,5 @@ export const {
   useAddSemesterRegistrationMutation,
   useGetAllRegisteredSemestersQuery,
   useUpdateSemesterRegistrationMutation,
+  useGetAllCoursesQuery,
 } = courseManagementApi;
