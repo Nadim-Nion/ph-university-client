@@ -1,4 +1,9 @@
-import type { TQueryParams, TResponse, TStudent } from "../../../types";
+import type {
+  TFacultyMember,
+  TQueryParams,
+  TResponse,
+  TStudent,
+} from "../../../types";
 import { baseApi } from "../../api/baseApi";
 
 const userManagementApi = baseApi.injectEndpoints({
@@ -89,6 +94,34 @@ const userManagementApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
+
+    // Get all faculty members
+    getAllFaculties: builder.query({
+      query: (args) => {
+        const params = new URLSearchParams();
+
+        // parms.append("limit", 10);
+        // params.append(args[0].name, args[0].value)
+
+        if (args && args.length > 0) {
+          args.forEach((item: TQueryParams) => {
+            params.append(item.name, item.value as string);
+          });
+        }
+
+        return {
+          url: "/faculties",
+          method: "GET",
+          params: params,
+        };
+      },
+      transformResponse: (response: TResponse<TFacultyMember[]>) => {
+        return {
+          data: response.data,
+          meta: response.meta,
+        };
+      },
+    }),
   }),
 });
 
@@ -100,4 +133,5 @@ export const {
   useUpdateUserStatusMutation,
   useAddAdminMutation,
   useAddFacultyMutation,
+  useGetAllFacultiesQuery,
 } = userManagementApi;

@@ -1,5 +1,12 @@
-import { Alert, Button, Spin, Table, type TableColumnsType } from "antd";
-import { useGetAllCoursesQuery } from "../../../redux/features/admin/courseManagement.api";
+import { Alert, Button, Modal, Spin, Table, type TableColumnsType } from "antd";
+import { useState } from "react";
+import PHForm from "../../../components/form/PHForm";
+import PHSelect from "../../../components/form/PHSelect";
+import {
+  useAddFacultyMembersMutation,
+  useGetAllCoursesQuery,
+} from "../../../redux/features/admin/courseManagement.api";
+import { useGetAllFacultiesQuery } from "../../../redux/features/admin/userManagement.api";
 import type { TCourse } from "../../../types";
 
 // interface DataType {
@@ -19,7 +26,6 @@ const Courses = () => {
     isLoading,
     isFetching,
   } = useGetAllCoursesQuery(undefined);
-  console.log({ coursesData });
 
   const tableData =
     coursesData &&
@@ -42,8 +48,8 @@ const Courses = () => {
     },
     {
       title: "Action",
-      render: () => {
-        return <Button>Assign Faculty</Button>;
+      render: (item) => {
+        return <AddFacultyModal facultyInfo={item} />;
       },
     },
   ];
@@ -75,13 +81,15 @@ const Courses = () => {
   // };
 
   if (isLoading) {
-    <Spin tip="Loading...">
-      <Alert
-        message="Alert message title"
-        description="Further details about the context of this alert."
-        type="info"
-      />
-    </Spin>;
+    return (
+      <Spin tip="Loading...">
+        <Alert
+          message="Alert message title"
+          description="Further details about the context of this alert."
+          type="info"
+        />
+      </Spin>
+    );
   }
 
   return (
@@ -95,6 +103,60 @@ const Courses = () => {
       // onChange={onChange}
       showSorterTooltip={{ target: "sorter-icon" }}
     />
+  );
+};
+
+const AddFacultyModal = ({ facultyInfo }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  // console.log("facultyInfo.key:", facultyInfo.key);
+  const { data: facultyData } = useGetAllFacultiesQuery(undefined);
+  // console.log(facultyData?.data);
+  const [addFacultyMembers] = useAddFacultyMembersMutation();
+
+  const facultyOptions = facultyData?.data?.map((item) => ({
+    value: item._id,
+    label: item.fullName,
+  }));
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleSubmit = (data) => {
+    // console.log("handleSubmit:", data);
+    const facultyMemberData = {
+      courseId: facultyInfo.key,
+      faculties: data.faculties,
+    };
+
+    addFacultyMembers(facultyMemberData);
+  };
+
+  return (
+    <>
+      <Button onClick={showModal}>Add Faculty</Button>
+      <Modal
+        title="Basic Modal"
+        closable={{ "aria-label": "Custom Close Button" }}
+        open={isModalOpen}
+        onCancel={handleCancel}
+        footer={null}
+      >
+        <PHForm onSubmit={handleSubmit}>
+          <PHSelect
+            mode="multiple"
+            options={facultyOptions}
+            name="faculties"
+            label="Faculties"
+          />
+          <Button htmlType="submit">Submit</Button>
+        </PHForm>
+      </Modal>
+    </>
   );
 };
 

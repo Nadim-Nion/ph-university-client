@@ -9,7 +9,7 @@ import PHInput from "../../../components/form/PHInput";
 import PHSelect from "../../../components/form/PHSelect";
 import {
   useAddAcademicDepartmentMutation,
-  useGetAllFacultiesQuery,
+  useGetAllAcademicFacultiesQuery,
 } from "../../../redux/features/admin/academicManagement.api.";
 import { academicDepartmentSchema } from "../../../schemas/academicManagament.schema";
 import type { TFaculty, TResponse } from "../../../types";
@@ -18,7 +18,7 @@ import type { TAcademicFaculty } from "../../../types/academicManagemeny.type";
 const CreateAcademicDepartment = () => {
   const [addAcademicDepartment] = useAddAcademicDepartmentMutation();
 
-  const { data: facultyData } = useGetAllFacultiesQuery(undefined);
+  const { data: facultyData } = useGetAllAcademicFacultiesQuery(undefined);
 
   const facultyOptions = facultyData?.data.map((faculty: TFaculty) => ({
     // label: faculty._id + " - " + faculty.name,

@@ -95,6 +95,16 @@ const courseManagementApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Course"],
     }),
+
+    // Assign Faculty Member to Course
+    addFacultyMembers: builder.mutation({
+      query: ({courseId, ...faculties}) => ({
+        url: `/courses/${courseId}/assign-faculties`,
+        method: "PUT",
+        body: faculties,
+      }),
+      invalidatesTags: ["Course"],
+    }),
   }),
 });
 
@@ -104,4 +114,5 @@ export const {
   useUpdateSemesterRegistrationMutation,
   useGetAllCoursesQuery,
   useAddCourseMutation,
+  useAddFacultyMembersMutation,
 } = courseManagementApi;

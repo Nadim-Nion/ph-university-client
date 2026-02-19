@@ -7,7 +7,7 @@ import {
   type TableProps,
 } from "antd";
 import { useState } from "react";
-import { useGetAllFacultiesQuery } from "../../../redux/features/admin/academicManagement.api.";
+import { useGetAllAcademicFacultiesQuery } from "../../../redux/features/admin/academicManagement.api.";
 import type { TQueryParams } from "../../../types";
 import type { TAcademicFaculty } from "../../../types/academicManagemeny.type";
 
@@ -25,7 +25,7 @@ const AcademicFaculty = () => {
     data: facultyData,
     isLoading,
     isFetching,
-  } = useGetAllFacultiesQuery(params);
+  } = useGetAllAcademicFacultiesQuery(params);
 
   const tableData =
     facultyData &&
