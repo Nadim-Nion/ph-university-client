@@ -29,3 +29,7 @@ export type TPreRequisiteCourse = {
 };
 
 export type TStaus = "UPCOMING" | "ONGOING" | "ENDED";
+
+export type TFacultyFormValues = {
+  faculties: string[];
+};

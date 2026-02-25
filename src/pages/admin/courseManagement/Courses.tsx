@@ -1,5 +1,6 @@
 import { Alert, Button, Modal, Spin, Table, type TableColumnsType } from "antd";
 import { useState } from "react";
+import type { FieldValues, SubmitHandler } from "react-hook-form";
 import PHForm from "../../../components/form/PHForm";
 import PHSelect from "../../../components/form/PHSelect";
 import {
@@ -106,7 +107,7 @@ const Courses = () => {
   );
 };
 
-const AddFacultyModal = ({ facultyInfo }) => {
+const AddFacultyModal = ({ facultyInfo }: { facultyInfo: TDataType }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   // console.log("facultyInfo.key:", facultyInfo.key);
   const { data: facultyData } = useGetAllFacultiesQuery(undefined);
@@ -126,8 +127,7 @@ const AddFacultyModal = ({ facultyInfo }) => {
     setIsModalOpen(false);
   };
 
-  const handleSubmit = (data) => {
-    // console.log("handleSubmit:", data);
+  const handleSubmit: SubmitHandler<FieldValues> = (data) => {
     const facultyMemberData = {
       courseId: facultyInfo.key,
       faculties: data.faculties,
