@@ -1,18 +1,24 @@
 import { Button, Col, Flex } from "antd";
+import { useState } from "react";
 import type { FieldValues, SubmitHandler } from "react-hook-form";
 import PHForm from "../../../components/form/PHForm";
 import PHInput from "../../../components/form/PHInput";
+import PHSelectWithWatch from "../../../components/form/PHSelectWithWatch";
 import { useGetAllAcademicFacultiesQuery } from "../../../redux/features/admin/academicManagement.api.";
 import type { TAcademicFaculty } from "../../../types";
-import PHSelectWithWatch from "../../../components/form/PHSelectWithWatch";
 
 const OfferedCourses = () => {
+  const [facultyId, setFacultyId] = useState("");
+  console.log('From Parent Component:', facultyId)
+
   const { data: academicFaculty } = useGetAllAcademicFacultiesQuery(undefined);
 
-  const academicFacultyOptions = academicFaculty?.data?.map((item: TAcademicFaculty) => ({
-    value: item._id,
-    label: item.name,
-  }));
+  const academicFacultyOptions = academicFaculty?.data?.map(
+    (item: TAcademicFaculty) => ({
+      value: item._id,
+      label: item.name,
+    }),
+  );
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     console.log({ data });
@@ -28,12 +34,13 @@ const OfferedCourses = () => {
           // resolver={zodResolver(academicSemesterSchema)}
         >
           <PHSelectWithWatch
-            label="Academic Semester"
-            name="academicSemester"
+            label="Academic Faculty"
+            name="academicFaculty"
             options={academicFacultyOptions}
+            onValueChange={setFacultyId}
           />
 
-          <PHInput type="text" label="Test" name="test" />
+          <PHInput disabled={!facultyId} type="text" label="Test" name="test" />
 
           <Button htmlType="submit">Submit</Button>
         </PHForm>
