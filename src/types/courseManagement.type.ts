@@ -1,4 +1,5 @@
 import type { TAcademicSemester } from "./academicManagemeny.type";
+import type { TFacultyMember } from "./userManagement.type";
 
 export type TRegisteredSemester = {
   _id: string;
@@ -30,6 +31,19 @@ export type TPreRequisiteCourse = {
 
 export type TStaus = "UPCOMING" | "ONGOING" | "ENDED";
 
-export type TFacultyFormValues = {
-  faculties: string[];
-};
+export type TCourseFaculty = {
+  faculties: TFacultyMember[];
+}
+
+export type TOfferedCourse = {
+  semesterRegistration: string
+  academicFaculty: string
+  academicDepartment: string
+  course: string
+  faculty: string
+  section: number
+  maxCapacity: number
+  days: string[]
+  startTime: string
+  endTime: string
+}

@@ -1,5 +1,6 @@
 import type {
   TCourse,
+  TCourseFaculty,
   TQueryParams,
   TRegisteredSemester,
   TResponseRedux,
@@ -98,10 +99,35 @@ const courseManagementApi = baseApi.injectEndpoints({
 
     // Assign Faculty Member to Course
     addFacultyMembers: builder.mutation({
-      query: ({courseId, ...faculties}) => ({
+      query: ({ courseId, ...faculties }) => ({
         url: `/courses/${courseId}/assign-faculties`,
         method: "PUT",
         body: faculties,
+      }),
+      invalidatesTags: ["Course"],
+    }),
+
+    // Get Faculty members by course ID
+    getAllCourseFaculties: builder.query({
+      query: (courseId) => ({
+        url: `/courses/${courseId}/get-faculties`,
+        method: "GET",
+      }),
+      transformResponse: (response: TResponseRedux<TCourseFaculty>) => {
+        return {
+          data: response.data,
+          meta: response.meta,
+        };
+      },
+      providesTags: ["Course"],
+    }),
+
+    // Create Offered Course
+    addOfferedCourse: builder.mutation({
+      query: (data) => ({
+        url: "/offered-courses/create-offered-course",
+        method: "POST",
+        body: data,
       }),
       invalidatesTags: ["Course"],
     }),
@@ -115,4 +141,6 @@ export const {
   useGetAllCoursesQuery,
   useAddCourseMutation,
   useAddFacultyMembersMutation,
+  useGetAllCourseFacultiesQuery,
+  useAddOfferedCourseMutation,
 } = courseManagementApi;
