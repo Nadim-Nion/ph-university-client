@@ -1,4 +1,4 @@
-import type { TAcademicSemester } from "./academicManagemeny.type";
+import type { TAcademicDepartment, TAcademicFaculty, TAcademicSemester } from "./academicManagemeny.type";
 import type { TFacultyMember } from "./userManagement.type";
 
 export type TRegisteredSemester = {
@@ -36,11 +36,13 @@ export type TCourseFaculty = {
 }
 
 export type TOfferedCourse = {
-  semesterRegistration: string
-  academicFaculty: string
-  academicDepartment: string
-  course: string
-  faculty: string
+  _id: string;
+  semesterRegistration: TRegisteredSemester
+  academicSemester: TAcademicSemester
+  academicFaculty: TAcademicFaculty
+  academicDepartment: TAcademicDepartment
+  course: TCourse
+  faculty: TFacultyMember
   section: number
   maxCapacity: number
   days: string[]
