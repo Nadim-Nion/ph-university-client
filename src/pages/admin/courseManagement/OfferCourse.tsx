@@ -38,7 +38,7 @@ const OfferCourse = () => {
   const { data: academicFaculty } = useGetAllAcademicFacultiesQuery(undefined);
   const { data: academicDepartment } = useGetAllDepartmentsQuery(undefined);
   const { data: course } = useGetAllCoursesQuery(undefined);
-  const { data: courseFaculty } = useGetAllCourseFacultiesQuery(courseId, {
+  const { data: courseFaculty, isFetching: facultyFetching } = useGetAllCourseFacultiesQuery(courseId, {
     skip: !courseId,
   });
   const [addOfferedCourse] = useAddOfferedCourseMutation();
@@ -136,7 +136,7 @@ const OfferCourse = () => {
             label="Faculty"
             name="faculty"
             options={courseFacultyOptions}
-            disabled={!courseId}
+            disabled={!courseId || facultyFetching}
           />
 
           <PHInput type="text" label="Section" name="section" />
