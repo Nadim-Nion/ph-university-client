@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Button, Row } from "antd";
 import { type FieldValues, type SubmitHandler } from "react-hook-form";
@@ -26,8 +28,8 @@ const Login = () => {
   // });
 
   const defaultValues = {
-    id: "A-0001",
-    password: "admin123",
+    id: "2026010001",
+    password: "student123",
   };
 
   const [login, { error }] = useLoginMutation();
