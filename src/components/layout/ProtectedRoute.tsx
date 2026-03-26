@@ -3,9 +3,9 @@ import { Navigate } from "react-router";
 import {
   logout,
   selectCurrentToken,
-  selectCurrentUser,
 } from "../../redux/features/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { getUserFromToken } from "../../utils/getUserFromToken";
 
 type TProtectedRoute = {
   children: ReactNode;
@@ -14,13 +14,14 @@ type TProtectedRoute = {
 
 const ProtectedRoute = ({ children, role }: TProtectedRoute) => {
   const token = useAppSelector(selectCurrentToken);
-  const user = useAppSelector(selectCurrentUser);
-const dispatch = useAppDispatch();
+  // const user = useAppSelector(selectCurrentUser); // We have extracted the user from redux which is not standard practise and it can be easily maniputed by the user. So we will decode the token and extract the user from it.
 
-  console.log("🚀 ~ ProtectedRoute ~ role:", role);
-  console.log("🚀 ~ ProtectedRoute ~ user:", user)
+  const dispatch = useAppDispatch();
+  const user = getUserFromToken(token as string);
 
-  if(role !== undefined && role !== user?.role){
+  console.log("user:", user);
+
+  if (role !== undefined && role !== user?.role) {
     dispatch(logout());
     return <Navigate to={"/login"} replace />;
   }

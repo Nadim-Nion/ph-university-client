@@ -1,10 +1,11 @@
 import { Layout, Menu } from "antd";
-import { selectCurrentUser } from "../../redux/features/auth/authSlice";
+import { selectCurrentToken } from "../../redux/features/auth/authSlice";
 import { useAppSelector } from "../../redux/hooks";
 import { adminPaths } from "../../routes/admin.routes";
 import { facultyPaths } from "../../routes/faculty.routes";
 import { studentPaths } from "../../routes/student.routes";
 import { sidebarItemsGenerator } from "../../utils/sidebarItemsGenerator";
+import { getUserFromToken } from "../../utils/getUserFromToken";
 
 const { Sider } = Layout;
 
@@ -15,7 +16,11 @@ const USER_ROLES = {
 };
 
 const Sidebar = () => {
-  const user = useAppSelector(selectCurrentUser);
+  // const user = useAppSelector(selectCurrentUser);
+/* We have extracted the user from redux which is not standard practise and it can be easily maniputed by the user. So we will decode the token and extract the user from it. */
+
+  const token = useAppSelector(selectCurrentToken);
+   const user = getUserFromToken(token as string);
   let sidebarItems;
 
   switch (user!.role) {
