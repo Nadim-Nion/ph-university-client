@@ -55,7 +55,11 @@ const Login = () => {
       dispatch(setUser({ user: user, token: res.data.accessToken }));
       toast.success("Login successful", { id: toastId, duration: 2000 });
 
-      navigate(`/${user?.role}/dashboard`);
+      if (res.data.needPasswordChange) {
+        navigate("/change-password");
+      } else {
+        navigate(`/${user?.role}/dashboard`);
+      }
     } catch (error) {
       toast.error("Something went wrong", { id: toastId, duration: 2000 });
       // console.log("error in Login:", error);

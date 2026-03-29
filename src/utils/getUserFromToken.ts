@@ -9,5 +9,3 @@ export const getUserFromToken = (token: string) => {
   }
   return user;
 };
-
-/* I have completed the video of module (32-3) */

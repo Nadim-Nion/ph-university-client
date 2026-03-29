@@ -34,6 +34,10 @@ const baseQueryWithRefreshToken: BaseQueryFn<
     toast.error((result.error as TError).data.message || "Resource not found");
   }
 
+  if (result && result?.error && result?.error?.status === 400) {
+    toast.error((result.error as TError).data.message || "Resource not found");
+  }
+
   if (result && result?.error && result?.error?.status === 401) {
     // console.log("Sending Refresh Token");
 
@@ -49,7 +53,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<
       api.dispatch(
         setUser({
           user,
-          token: data.data.accessToken,
+          token: data?.data?.accessToken,
         }),
       );
 
