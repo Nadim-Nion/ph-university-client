@@ -42,7 +42,17 @@ const facultyCoursesApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["OfferedCourse"],
     }),
+
+    // Update marks for a course
+    updateCourseMarks: builder.mutation({
+      query: (data) => ({
+        url: "/enrolled-courses/update-enrolled-course-marks",
+        method: "PATCH",
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const { useGetAllFacultyCoursesQuery } = facultyCoursesApi;
+export const { useGetAllFacultyCoursesQuery, useUpdateCourseMarksMutation } =
+  facultyCoursesApi;
