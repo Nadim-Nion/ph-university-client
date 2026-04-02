@@ -24,6 +24,7 @@ const studentCourseApi = baseApi.injectEndpoints({
           params: params,
         };
       },
+      providesTags: ["OfferedCourse"],
       transformResponse: (response: TResponse<TOfferedCourseForStudent[]>) => {
         return {
           data: response.data,
@@ -32,15 +33,19 @@ const studentCourseApi = baseApi.injectEndpoints({
       },
     }),
 
-    // Create an academic semester
-    addAcademicSemester: builder.mutation({
+    // Enroll in a course
+    enrollCourse: builder.mutation({
       query: (data) => ({
-        url: "/academic-semesters/create-academic-semester",
+        url: "/enrolled-courses/create-enrolled-course",
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["OfferedCourse"],
     }),
   }),
 });
 
-export const { useGetAllOfferedCourseForStudentQuery } = studentCourseApi;
+export const {
+  useGetAllOfferedCourseForStudentQuery,
+  useEnrollCourseMutation,
+} = studentCourseApi;

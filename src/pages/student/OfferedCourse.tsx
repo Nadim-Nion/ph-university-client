@@ -1,10 +1,15 @@
 import { Button, Col, Row } from "antd";
-import { useGetAllOfferedCourseForStudentQuery } from "../../redux/features/student/studentCourseManagement.api";
+import {
+  useEnrollCourseMutation,
+  useGetAllOfferedCourseForStudentQuery,
+} from "../../redux/features/student/studentCourseManagement.api";
+import NoOfferedCourseCard from "./NoOfferedCourseCard";
+
 
 const OfferedCourse = () => {
   const { data: offeredCourseData } =
     useGetAllOfferedCourseForStudentQuery(undefined);
-  // console.log(offeredCourseData);
+  const [enrollCourse] = useEnrollCourseMutation();
 
   type TAcc = Record<
     string,
@@ -19,6 +24,10 @@ const OfferedCourse = () => {
       }[];
     }
   >;
+
+  /* type TAcc = {
+    [index:string]: any;
+  } */
 
   const singleObj = offeredCourseData?.data?.reduce((acc: TAcc, item) => {
     // console.log("item:", item);
@@ -43,8 +52,22 @@ const OfferedCourse = () => {
 
   const modifiedData = Object.values(singleObj ? singleObj : {});
 
+  const handleEnroll = async (courseId: string) => {
+    const enrollData = {
+      offeredCourse: courseId,
+    };
+
+    const res = await enrollCourse(enrollData);
+    console.log("res:", res);
+  };
+
+  if (!modifiedData.length) {
+    // return <h1>No Offered Course Found</h1>
+    return <NoOfferedCourseCard />
+  }
+
   return (
-    <Row gutter={[0,10]}>
+    <Row gutter={[0, 10]}>
       {modifiedData.map((item) => {
         return (
           <Col
@@ -62,13 +85,15 @@ const OfferedCourse = () => {
                     justify={"space-between"}
                     align={"middle"}
                     key={index}
-                    style={{ borderTop: "solid #d4d4d4 2px",  padding: "10px" }}
+                    style={{ borderTop: "solid #d4d4d4 2px", padding: "10px" }}
                   >
                     <Col span={5}>Section: {sectionItem.section}</Col>
                     <Col span={5}>Days: {sectionItem.days.join(" , ")}</Col>
                     <Col span={5}>Start Time: {sectionItem.startTime}</Col>
                     <Col span={5}>End Time: {sectionItem.endTime}</Col>
-                    <Button>Enroll</Button>
+                    <Button onClick={() => handleEnroll(sectionItem._id)}>
+                      Enroll
+                    </Button>
                   </Row>
                 );
               })}
