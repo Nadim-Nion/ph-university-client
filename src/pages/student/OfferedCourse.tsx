@@ -5,7 +5,6 @@ import {
 } from "../../redux/features/student/studentCourseManagement.api";
 import NoOfferedCourseCard from "./NoOfferedCourseCard";
 
-
 const OfferedCourse = () => {
   const { data: offeredCourseData } =
     useGetAllOfferedCourseForStudentQuery(undefined);
@@ -57,13 +56,12 @@ const OfferedCourse = () => {
       offeredCourse: courseId,
     };
 
-    const res = await enrollCourse(enrollData);
-    console.log("res:", res);
+    await enrollCourse(enrollData);
   };
 
   if (!modifiedData.length) {
     // return <h1>No Offered Course Found</h1>
-    return <NoOfferedCourseCard />
+    return <NoOfferedCourseCard />;
   }
 
   return (

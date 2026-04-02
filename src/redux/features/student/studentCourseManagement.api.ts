@@ -42,10 +42,40 @@ const studentCourseApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["OfferedCourse"],
     }),
+
+    // Get all enrolled courses for a student
+    getAllEnrolledCoursesForStudent: builder.query({
+      query: (args) => {
+        const params = new URLSearchParams();
+
+        // parms.append("limit", 10);
+        // params.append(args[0].name, args[0].value)
+
+        if (args && args.length > 0) {
+          args.forEach((item: TQueryParams) => {
+            params.append(item.name, item.value as string);
+          });
+        }
+
+        return {
+          url: "/enrolled-courses/my-enrolled-courses",
+          method: "GET",
+          params: params,
+        };
+      },
+      providesTags: ["OfferedCourse"],
+      transformResponse: (response: TResponse<TOfferedCourseForStudent[]>) => {
+        return {
+          data: response.data,
+          meta: response.meta,
+        };
+      },
+    }),
   }),
 });
 
 export const {
   useGetAllOfferedCourseForStudentQuery,
   useEnrollCourseMutation,
+  useGetAllEnrolledCoursesForStudentQuery,
 } = studentCourseApi;
