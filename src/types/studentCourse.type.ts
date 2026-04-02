@@ -1,11 +1,12 @@
-import type { TOfferedCourse } from "./courseManagement.type";
+import type { TAcademicDepartment, TAcademicFaculty, TAcademicSemester } from "./academicManagemeny.type";
+import type { TOfferedCourse, TRegisteredSemester } from "./courseManagement.type";
 
 export type TOfferedCourseForStudent = {
   _id: string;
-  semesterRegistration: string;
-  academicSemester: string;
-  academicFaculty: string;
-  academicDepartment: string;
+  semesterRegistration: TRegisteredSemester;
+  academicSemester: TAcademicSemester;
+  academicFaculty: TAcademicFaculty;
+  academicDepartment: TAcademicDepartment;
   course: TCourseForStudent;
   faculty: string;
   maxCapacity: number;
