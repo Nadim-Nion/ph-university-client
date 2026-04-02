@@ -1,5 +1,6 @@
 import type { TAcademicDepartment, TAcademicFaculty, TAcademicSemester } from "./academicManagemeny.type";
 import type { TOfferedCourse, TRegisteredSemester } from "./courseManagement.type";
+import type { TStudent } from "./userManagement.type";
 
 export type TOfferedCourseForStudent = {
   _id: string;
@@ -23,6 +24,7 @@ export type TOfferedCourseForStudent = {
   isPrerequisitesFulfilled: boolean;
   isAlreadyEnrolled: boolean;
   offeredCourse: TOfferedCourse;
+  student: TStudent
 };
 
 export type TCourseForStudent = {
